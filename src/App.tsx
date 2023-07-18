@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Card } from "./components/atoms/Card.component";
+import { SearchInput } from "./components/molecules/SearchInput.component";
+import { CurrencyExchangeRateList } from "./components/organisms/CurrencyExchangeRateList.component";
+import { Header } from "./components/organisms/Header.component";
+import { Container } from "./components/templates/Container.component";
+import { useExchangeRates } from "./hooks/useExchangeRates.hook";
 
 function App() {
+  const { isLoading, isError, exchangeRates } = useExchangeRates();
+
+  if (isError || !exchangeRates) return <div>Error occurred</div>;
+  if (isLoading) return <div>Loading...</div>;
+
+  console.log(exchangeRates);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+
+      <main className="mt-18">
+        <section className="bg-indigo p-4 sticky top-0">
+          <Container>
+            <Card className="bg-white" withBorder={false}>
+              <SearchInput />
+            </Card>
+          </Container>
+        </section>
+
+        <section>
+          <Container className="my-8 gap-y-4 grid">
+            <CurrencyExchangeRateList exchangeRates={exchangeRates} />
+          </Container>
+        </section>
+      </main>
+    </>
   );
+
 }
 
 export default App;
