@@ -8,10 +8,9 @@ import { useExchangeRates } from "./hooks/useExchangeRates.hook";
 function App() {
   const { isLoading, isError, exchangeRates } = useExchangeRates();
 
-  if (isError || !exchangeRates) return <div>Error occurred</div>;
   if (isLoading) return <div>Loading...</div>;
+  if (isError || !exchangeRates) return <div>Error occurred</div>;
 
-  console.log(exchangeRates);
   return (
     <>
       <Header />
@@ -27,13 +26,15 @@ function App() {
 
         <section>
           <Container className="my-8 gap-y-4 grid">
-            <CurrencyExchangeRateList exchangeRates={exchangeRates} />
+            <CurrencyExchangeRateList
+              exchangeRates={exchangeRates}
+              data-testid="currency-exchange-rate-list"
+            />
           </Container>
         </section>
       </main>
     </>
   );
-
 }
 
 export default App;

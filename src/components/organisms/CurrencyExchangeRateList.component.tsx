@@ -1,16 +1,17 @@
 import classNames from "classnames";
-import { CurrencyExchangeRateCard } from "../molecules/CurrencyExchangeRateCard. component";
-import { IForeignExchangeItem } from "src/interfaces/api/ForeingExchange.interface";
-import { findIndexByCurrencyCode } from "src/functions/countryUtils";
+import { IForeignExchangeItem } from "src/interfaces/api/ForeignExchange.interface";
+import { CurrencyExchangeRateCard } from "../molecules/CurrencyExchangeRateCard.component";
 
 export interface CurrencyExchangeRateListProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+  extends React.HTMLAttributes<HTMLUListElement> {
   exchangeRates: IForeignExchangeItem[] | undefined;
+  'data-testid'?: string;
 }
 
 export const CurrencyExchangeRateList = ({
   exchangeRates,
   className,
+  ...props
 }: CurrencyExchangeRateListProps) => {
   if (!exchangeRates) return null;
 
@@ -21,6 +22,7 @@ export const CurrencyExchangeRateList = ({
         { "gap-y-4": !className?.includes("gap") },
         className
       )}
+      {...props}
     >
       {exchangeRates.map((el) => {
         return (
@@ -28,16 +30,11 @@ export const CurrencyExchangeRateList = ({
             as="li"
             key={el.currency}
             currencyCode={el.currency}
-            country={
-              el.countries &&
-              el.countries[findIndexByCurrencyCode(el.countries, el.currency)]
-            }
-            isUsedInMultipleCountries={
-              el.countries && el.countries.length > 1 ? true : false
-            }
+            countries={el.countries}
             currencyNameI18N={el.nameI18N}
             currencyMiddleExchangeRate={el.exchangeRate?.middle}
             precision={el.precision}
+            data-testid="currency-exchange-rate-card"
           />
         );
       })}

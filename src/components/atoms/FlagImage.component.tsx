@@ -3,6 +3,7 @@ export interface FlagImageProps
   countryCode: string;
   pathToFlagImages: string;
   imageFileType: string;
+  'data-testid'?: string;
 }
 
 export const FlagImage = ({
@@ -11,12 +12,14 @@ export const FlagImage = ({
   countryCode,
   pathToFlagImages,
   imageFileType,
+  ...props
 }: FlagImageProps) => {
   return (
     <img
       src={`${pathToFlagImages}${countryCode.toLowerCase()}.${imageFileType}`}
       alt={alt}
       className={className}
+      {...props}
     />
   );
 };

@@ -12,6 +12,7 @@ export const Card = <C extends ElementType>({
   children,
   as,
   withBorder = true,
+  ...props
 }: CardProps<C>) => {
   const Component = as || "div";
 
@@ -27,6 +28,7 @@ export const Card = <C extends ElementType>({
         { "rounded-xl": !className?.includes("rounded-") },
         className
       )}
+      {...props}
     >
       {children}
     </Component>

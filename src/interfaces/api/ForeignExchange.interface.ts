@@ -1,7 +1,4 @@
-import {
-  CountryWithFlag,
-  CurrencyObjectWithFlag,
-} from "../app/ForeignExchange.interface";
+import { CountryWithFlag } from "../app/ForeignExchange.types";
 
 export interface IForeignExchangeResponse {
   baseCurrency: string;
@@ -28,11 +25,3 @@ export interface IRate {
   middle: number;
   sell: number;
 }
-
-// export interface ICountryCodes {
-//   country: string;
-//   countryCode: string;
-//   currency: string;
-//   code: string;
-// 	isCountryFlagProvided: boolean;
-// }

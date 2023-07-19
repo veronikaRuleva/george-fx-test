@@ -6,7 +6,8 @@ import { useSearchParams } from "react-router-dom";
 export interface SearchInputProps extends InputProps {}
 
 export const SearchInput = ({ ...props }: SearchInputProps) => {
-  let [_, setSearchParams] = useSearchParams();
+  let [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("s");
 
   function handleSubmit(event: ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
@@ -14,12 +15,15 @@ export const SearchInput = ({ ...props }: SearchInputProps) => {
   }
 
   return (
-    <form className="border border-gray-300 py-2 px-3 rounded-md flex items-center w-full">
+    <form
+      className="border border-gray-300 py-2 px-3 rounded-md flex items-center w-full"
+    >
       <label htmlFor="header-search">
         <span className="sr-only">Search currencies</span>
       </label>
       <HiMagnifyingGlass className="w-5 h-5 text-gray-500 mr-2" />
       <Input
+        value={query ? query : undefined}
         type="text"
         id="header-search"
         placeholder="Search..."

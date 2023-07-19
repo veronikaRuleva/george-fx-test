@@ -1,4 +1,4 @@
-import { IForeignExchangeItem } from "src/interfaces/api/ForeingExchange.interface";
+import { IForeignExchangeItem } from "src/interfaces/api/ForeignExchange.interface";
 import {
   CurrencyCode,
   CountryCode,
@@ -6,23 +6,12 @@ import {
   CurrencyObject,
   CurrencyObjectWithFlag,
   CountryWithFlag,
-} from "src/interfaces/app/ForeignExchange.interface";
+} from "src/interfaces/app/ForeignExchange.types";
 
-export const findIsFlagProvided = (
-  providedFlags: string[],
-  countryCode: string
-) => {
-  if (providedFlags.includes(countryCode.toLocaleLowerCase())) {
-    return true;
-  }
-
-  return false;
-};
-
-export function getCurrencyList(
+export const getCurrencyList = (
   countries: Record<CountryCode, CountryName>,
   currencyCodes: Record<CountryCode, CurrencyCode>
-): CurrencyObject[] {
+): CurrencyObject[] => {
   const currencyList: Record<CurrencyCode, CurrencyObject> = {};
 
   for (const countryCode in countries) {
@@ -45,12 +34,12 @@ export function getCurrencyList(
   }
 
   return Object.values(currencyList);
-}
+};
 
-export function addFlagAvailability(
+export const addFlagAvailability = (
   currencyList: CurrencyObject[],
   availableFlags: CountryCode[]
-): CurrencyObjectWithFlag[] {
+): CurrencyObjectWithFlag[] => {
   return currencyList.map((currency) => {
     const countriesWithFlag: CountryWithFlag[] = currency.countries.map(
       (country) => ({
@@ -66,12 +55,12 @@ export function addFlagAvailability(
       countries: countriesWithFlag,
     };
   });
-}
+};
 
-export function appendCurrencyFlags(
+export const appendCurrencyFlags = (
   currencyListWithFlag: CurrencyObjectWithFlag[],
   exchangeRates: IForeignExchangeItem[]
-): IForeignExchangeItem[] {
+): IForeignExchangeItem[] => {
   return exchangeRates.map((rate) => {
     const currencyObject = currencyListWithFlag.find(
       (currency) => currency.currencyCode === rate.currency
@@ -89,15 +78,14 @@ export function appendCurrencyFlags(
 
     return rate;
   });
-}
+};
 
-export function findIndexByCurrencyCode(
+export const findIndexByCurrencyCode = (
   countries: CountryWithFlag[],
   currencyCode: string
-): number {
+): number => {
   const countryCodePrefix = currencyCode.substring(0, 2);
 
-  // console.log(countries, currencyCode);
   for (let i = 0; i < countries.length; i++) {
     const { countryCode, isFlagProvided } = countries[i];
     if (countryCode.startsWith(countryCodePrefix) && isFlagProvided) {
@@ -114,4 +102,37 @@ export function findIndexByCurrencyCode(
   }
 
   return 0;
-}
+};
+
+export const filterExchangeRates = (
+  exchangeRates: IForeignExchangeItem[],
+  query: string
+): IForeignExchangeItem[] => {
+  const searchQuery = query.toLowerCase().trim();
+
+  return exchangeRates.filter((rate) => {
+    // Check if the country name, country code, currency code, or currency name contains the search query
+    const matchesCountryName = rate.countries?.some((country) =>
+      country.countryName.toLowerCase().includes(searchQuery)
+    );
+
+    const matchesCountryCode = rate.countries?.some((country) =>
+      country.countryCode.toLowerCase().includes(searchQuery)
+    );
+
+    const matchesCurrencyCode = rate.currency
+      .toLowerCase()
+      .includes(searchQuery);
+
+    const matchesCurrencyName = rate.nameI18N
+      ?.toLowerCase()
+      .includes(searchQuery);
+
+    return (
+      matchesCountryName ||
+      matchesCountryCode ||
+      matchesCurrencyCode ||
+      matchesCurrencyName
+    );
+  });
+};

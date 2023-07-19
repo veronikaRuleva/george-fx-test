@@ -1,32 +1,25 @@
-import { HTMLAttributes } from "react";
-import { FlagImage } from "../atoms/FlagImage.component";
 import classNames from "classnames";
-import { CountryWithFlag } from "src/interfaces/app/ForeignExchange.interface";
-import { Badge } from "../atoms/Badje.component";
-import { FlagPlaceholder } from "../atoms/FlagPlaceholde.component";
+import { HTMLAttributes } from "react";
+import { CountryWithFlag } from "src/interfaces/app/ForeignExchange.types";
+import { Flag } from "./Flag.component";
 
-export interface CurrencyMetaDataProps extends HTMLAttributes<HTMLDivElement> {
+export interface CountryMetaDataProps extends HTMLAttributes<HTMLDivElement> {
   country: CountryWithFlag;
 }
 
 export const CountryMetaData = ({
   className,
   country,
-}: CurrencyMetaDataProps) => {
+  ...props
+}: CountryMetaDataProps) => {
   const { countryCode, countryName, isFlagProvided } = country;
   return (
-    <div className={classNames("flex gap-x-2", className)}>
-      {isFlagProvided ? (
-        <FlagImage
-          pathToFlagImages="/images/flags/"
-          alt={countryCode}
-          countryCode={countryCode}
-          imageFileType="png"
-          className="h-6"
-        />
-      ) : (
-        <FlagPlaceholder countryCode={countryCode} />
-      )}
+    <div className={classNames("flex gap-x-2", className)} {...props}>
+      <Flag
+        isFlagProvided={isFlagProvided}
+        countryCode={countryCode}
+        className="h-6"
+      />
       <span className="flex">{countryName}</span>
     </div>
   );

@@ -1,14 +1,15 @@
-import {
-  IForeignExchangeItem,
-  IForeignExchangeResponse,
-} from "../interfaces/api/ForeingExchange.interface";
-import useFetch from "./useFetch.hook";
-import { useCountryCurrencyData } from "./useCountryCurrencyData.hook";
-import { appendCurrencyFlags } from "src/functions/countryUtils";
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
+import {
+  appendCurrencyFlags,
+  filterExchangeRates,
+} from "src/functions/countryUtils";
+import { IForeignExchangeResponse } from "../interfaces/api/ForeignExchange.interface";
+import { useCountryCurrencyData } from "./useCountryCurrencyData.hook";
+import useFetch from "./useFetch.hook";
 
 export const useExchangeRates = () => {
+  const { currenciesList } = useCountryCurrencyData();
   let [searchParams, _] = useSearchParams();
   const query = searchParams.get("s");
 
@@ -20,21 +21,19 @@ export const useExchangeRates = () => {
     "https://run.mocky.io/v3/c88db14a-3128-4fbd-af74-1371c5bb0343"
   );
 
-  const { currenciesList } = useCountryCurrencyData();
-
-  const filteredExchangeRates = useMemo(() => {
+  const validExchangeRates = useMemo(() => {
     if (fxResponse) {
       return fxResponse?.fx.filter((el) => el.exchangeRate !== undefined);
     }
   }, [fxResponse]);
 
   const fullExchangeRatesList = useMemo(() => {
-    if (currenciesList && filteredExchangeRates) {
-      return appendCurrencyFlags(currenciesList, filteredExchangeRates);
+    if (currenciesList && validExchangeRates) {
+      return appendCurrencyFlags(currenciesList, validExchangeRates);
     }
-  }, [currenciesList, filteredExchangeRates]);
+  }, [currenciesList, validExchangeRates]);
 
-  const rates = useMemo(() => {
+  const filteredExchangeRates = useMemo(() => {
     if (fullExchangeRatesList) {
       if (query) {
         return filterExchangeRates(fullExchangeRatesList, query);
@@ -44,41 +43,9 @@ export const useExchangeRates = () => {
     }
   }, [fullExchangeRatesList, query]);
 
-  function filterExchangeRates(
-    exchangeRates: IForeignExchangeItem[],
-    query: string
-  ): IForeignExchangeItem[] {
-    const searchQuery = query.toLowerCase().trim();
-
-    return exchangeRates.filter((rate) => {
-      // Check if the country name, country code, currency code, or currency name contains the search query
-      const matchesCountryName = rate.countries?.some((country) =>
-        country.countryName.toLowerCase().includes(searchQuery)
-      );
-
-      const matchesCountryCode = rate.countries?.some((country) =>
-        country.countryCode.toLowerCase().includes(searchQuery)
-      );
-
-      const matchesCurrencyCode = rate.currency
-        .toLowerCase()
-        .includes(searchQuery);
-
-      const matchesCurrencyName = rate.nameI18N
-        ?.toLowerCase()
-        .includes(searchQuery);
-
-      return (
-        matchesCountryName ||
-        matchesCountryCode ||
-        matchesCurrencyCode ||
-        matchesCurrencyName
-      );
-    });
-  }
   return {
     isLoading: isFxLoading,
     isError: isFxError,
-    exchangeRates: rates,
+    exchangeRates: filteredExchangeRates,
   };
 };
