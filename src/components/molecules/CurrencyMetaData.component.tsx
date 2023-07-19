@@ -11,7 +11,7 @@ import { Flag } from "./Flag.component";
 export interface CurrencyMetaDataProps extends HTMLAttributes<HTMLDivElement> {
   countries: CountryWithFlag[] | [];
   currencyCode: CurrencyCode;
-  'data-testid'?: string;
+  "data-testid"?: string;
 }
 
 export const CurrencyMetaData = ({
@@ -26,7 +26,10 @@ export const CurrencyMetaData = ({
 
   return (
     <div className={classNames("flex flex-col gap-y-2", className)} {...props}>
-      <CountryMetaData country={countries[countryIndex]} data-testid="country-metadata"/>
+      <CountryMetaData
+        country={countries[countryIndex]}
+        data-testid="country-metadata"
+      />
 
       {countries.length > 1 && (
         <span className="text-xs text-gray-500">

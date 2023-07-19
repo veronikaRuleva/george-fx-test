@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { useSearchParams as mockUseSearchParams } from "react-router-dom";
 import {
-  SearchInputProps,
   SearchInput,
+  SearchInputProps,
 } from "src/components/molecules/SearchInput.component";
 
 jest.mock("react-router-dom", () => ({
@@ -15,8 +15,7 @@ describe("SearchInput component", () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    // Mock useSearchParams hook
-    mockUseSearchParams.mockReturnValue([
+    (mockUseSearchParams as jest.Mock).mockReturnValue([
       { get: jest.fn(), set: mockSetSearchParams },
     ]);
   });
@@ -27,7 +26,7 @@ describe("SearchInput component", () => {
     };
 
     const mockQuery = "usd";
-    mockUseSearchParams.mockReturnValue([
+    (mockUseSearchParams as jest.Mock).mockReturnValue([
       { get: () => mockQuery, set: mockSetSearchParams },
     ]);
 
@@ -37,13 +36,13 @@ describe("SearchInput component", () => {
     expect(searchInput.value).toBe(mockQuery);
   });
 
-  test("handles search input change", () => {
+  test("handles search input change", async () => {
     const props: SearchInputProps = {
       "data-testid": "search-input",
     };
 
     const mockQuery = "usd";
-    mockUseSearchParams.mockReturnValue([
+    (mockUseSearchParams as jest.Mock).mockReturnValue([
       { get: () => mockQuery, set: mockSetSearchParams },
     ]);
 

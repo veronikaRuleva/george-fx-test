@@ -5,7 +5,7 @@ import { CurrencyExchangeRateCard } from "../molecules/CurrencyExchangeRateCard.
 export interface CurrencyExchangeRateListProps
   extends React.HTMLAttributes<HTMLUListElement> {
   exchangeRates: IForeignExchangeItem[] | undefined;
-  'data-testid'?: string;
+  "data-testid"?: string;
 }
 
 export const CurrencyExchangeRateList = ({

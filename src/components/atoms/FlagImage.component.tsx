@@ -3,7 +3,7 @@ export interface FlagImageProps
   countryCode: string;
   pathToFlagImages: string;
   imageFileType: string;
-  'data-testid'?: string;
+  "data-testid"?: string;
 }
 
 export const FlagImage = ({

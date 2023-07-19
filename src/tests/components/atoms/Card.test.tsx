@@ -36,10 +36,10 @@ describe("Card component", () => {
   });
 
   test("renders as the specified element", () => {
-    render(<Card as="section" data-testid="card"/>);
+    render(<Card as="section" data-testid="card" />);
     const cardElement = screen.getByTestId("card");
     expect(cardElement).toBeInTheDocument();
-    expect(cardElement.tagName).toBe('SECTION');
+    expect(cardElement.tagName).toBe("SECTION");
   });
 
   test("forwards HTML attributes correctly", () => {

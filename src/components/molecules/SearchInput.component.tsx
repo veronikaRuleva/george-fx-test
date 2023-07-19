@@ -15,9 +15,7 @@ export const SearchInput = ({ ...props }: SearchInputProps) => {
   }
 
   return (
-    <form
-      className="border border-gray-300 py-2 px-3 rounded-md flex items-center w-full"
-    >
+    <form className="border border-gray-300 py-2 px-3 rounded-md flex items-center w-full">
       <label htmlFor="header-search">
         <span className="sr-only">Search currencies</span>
       </label>

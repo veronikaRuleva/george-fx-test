@@ -1,44 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import {
-  CurrencyExchangeRateCard,
-  CurrencyExchangeRateCardProps,
-} from "src/components/molecules/CurrencyExchangeRateCard.component";
-import {
   CurrencyExchangeRateList,
   CurrencyExchangeRateListProps,
 } from "src/components/organisms/CurrencyExchangeRateList.component";
 import { IForeignExchangeItem } from "src/interfaces/api/ForeignExchange.interface";
-
-// jest.mock(
-//   "src/components/molecules/CurrencyExchangeRateCard.component",
-//   () => ({
-//     CurrencyExchangeRateCard: jest.fn((props) => {
-//       return <div data-testid="mock-currency-exchange-rate-card" />;
-//     }),
-//   })
-// );
-
-// jest.mock("src/components/molecules/CurrencyExchangeRateCard.component", () => () => {
-//     return <div data-testid="mock-currency-exchange-rate-card" />;
-//   });
-// const mockChildComponent = jest.fn();
-
-// jest.mock("src/components/molecules/CurrencyExchangeRateCard.component", () => ({
-//     CurrencyExchangeRateCard: ({...props}: CurrencyExchangeRateCardProps<C>) => {
-//         mockChildComponent(props);
-//        return <div data-testid="mock-currency-exchange-rate-card" />;
-//     },
-//   }));
-
-// jest.mock(
-//   "src/components/molecules/CurrencyExchangeRateCard.component",
-//   () => ({
-//     CurrencyExchangeRateCard: jest.fn((props) => {
-//       console.log(props);
-//       return <div data-testid="mock-currency-exchange-rate-card" />;
-//     }),
-//   })
-// );
 
 describe("CurrencyExchangeRateList component", () => {
   test("renders correctly with exchange rates", () => {

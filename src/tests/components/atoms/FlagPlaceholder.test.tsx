@@ -1,40 +1,43 @@
-import { render, screen } from '@testing-library/react';
-import { FlagPlaceholder, FlagPlaceholderProps } from 'src/components/atoms/FlagPlaceholder.component';
+import { render, screen } from "@testing-library/react";
+import {
+  FlagPlaceholder,
+  FlagPlaceholderProps,
+} from "src/components/atoms/FlagPlaceholder.component";
 
-describe('FlagPlaceholder component', () => {
-  test('renders with correct country code', () => {
+describe("FlagPlaceholder component", () => {
+  test("renders with correct country code", () => {
     const props: FlagPlaceholderProps = {
-      countryCode: 'US',
+      countryCode: "US",
     };
 
     render(<FlagPlaceholder {...props} />);
-    const flagPlaceholderElement = screen.getByText('US');
+    const flagPlaceholderElement = screen.getByText("US");
 
     expect(flagPlaceholderElement).toBeInTheDocument();
   });
 
-  test('renders with additional CSS classes', () => {
+  test("renders with additional CSS classes", () => {
     const props: FlagPlaceholderProps = {
-      countryCode: 'UK',
-      className: 'extra-class',
+      countryCode: "UK",
+      className: "extra-class",
     };
 
     render(<FlagPlaceholder {...props} />);
-    const flagPlaceholderElement = screen.getByText('UK');
+    const flagPlaceholderElement = screen.getByText("UK");
 
-    expect(flagPlaceholderElement).toHaveClass('extra-class');
+    expect(flagPlaceholderElement).toHaveClass("extra-class");
   });
 
-  test('forwards additional HTML attributes', () => {
+  test("forwards additional HTML attributes", () => {
     const props: FlagPlaceholderProps = {
-      countryCode: 'FR',
-      'data-testid': 'flag-placeholder',
+      countryCode: "FR",
+      "data-testid": "flag-placeholder",
     };
 
     render(<FlagPlaceholder {...props} />);
-    const flagPlaceholderElement = screen.getByTestId('flag-placeholder');
+    const flagPlaceholderElement = screen.getByTestId("flag-placeholder");
 
     expect(flagPlaceholderElement).toBeInTheDocument();
-    expect(flagPlaceholderElement).toHaveTextContent('FR');
+    expect(flagPlaceholderElement).toHaveTextContent("FR");
   });
 });

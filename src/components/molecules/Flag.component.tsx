@@ -5,7 +5,7 @@ import { FlagPlaceholder } from "../atoms/FlagPlaceholder.component";
 export interface FlagProps extends HTMLAttributes<HTMLDivElement> {
   isFlagProvided: boolean;
   countryCode: string;
-  'data-testid'?: string;
+  "data-testid"?: string;
 }
 
 export const Flag = ({
