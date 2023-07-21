@@ -1,17 +1,18 @@
 import classNames from "classnames";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, memo } from "react";
 
 export interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
   "data-testid"?: string;
 }
 
-export const Container = ({
+export const Container = memo(function ContainerComponent({
   className,
   children,
   ...props
-}: ContainerProps) => (
-  <div className={classNames("container mx-auto", className)} {...props}>
-    {" "}
-    {children}
-  </div>
-);
+}: ContainerProps) {
+  return (
+    <div className={classNames("container mx-auto", className)} {...props}>
+      {children}
+    </div>
+  );
+});

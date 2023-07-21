@@ -1,11 +1,13 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, memo } from "react";
 import { Input, InputProps } from "../atoms/Input.component";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
 
 export interface SearchInputProps extends InputProps {}
 
-export const SearchInput = ({ ...props }: SearchInputProps) => {
+export const SearchInput = memo(function SearchInputComponent({
+  ...props
+}: SearchInputProps) {
   let [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("s");
 
@@ -33,4 +35,4 @@ export const SearchInput = ({ ...props }: SearchInputProps) => {
       />
     </form>
   );
-};
+});

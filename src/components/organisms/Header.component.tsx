@@ -1,10 +1,14 @@
 import classNames from "classnames";
 import { ReactComponent as GeorgeLogo } from "src/svg/george-logo.svg";
 import { Container } from "../templates/Container.component";
+import { memo } from "react";
 
 export interface HeaderProps extends React.HTMLAttributes<HTMLMenuElement> {}
 
-export const Header = ({ className, ...props }: HeaderProps) => {
+export const Header = memo(function HeaderComponent({
+  className,
+  ...props
+}: HeaderProps) {
   return (
     <header className={classNames("bg-george-blue-300", className)} {...props}>
       <Container
@@ -19,4 +23,4 @@ export const Header = ({ className, ...props }: HeaderProps) => {
       </Container>
     </header>
   );
-};
+});

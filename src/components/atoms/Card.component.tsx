@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { ElementType } from "react";
+import { ElementType, memo } from "react";
 
 export interface CardProps<C extends ElementType>
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -7,13 +7,13 @@ export interface CardProps<C extends ElementType>
   as?: C;
 }
 
-export const Card = <C extends ElementType>({
+export const Card = memo(function CardComponent<C extends ElementType>({
   className,
   children,
   as,
   withBorder = true,
   ...props
-}: CardProps<C>) => {
+}: CardProps<C>) {
   const Component = as || "div";
 
   return (
@@ -33,4 +33,4 @@ export const Card = <C extends ElementType>({
       {children}
     </Component>
   );
-};
+});

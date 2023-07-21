@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Card } from "./components/atoms/Card.component";
 import { SearchInput } from "./components/molecules/SearchInput.component";
 import { CurrencyExchangeRateList } from "./components/organisms/CurrencyExchangeRateList.component";
